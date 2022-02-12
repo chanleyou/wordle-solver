@@ -1,52 +1,29 @@
+import { Letter, Color } from './types';
 import { answers } from './words';
 
-type Letter =
-	| 'a'
-	| 'b'
-	| 'c'
-	| 'd'
-	| 'e'
-	| 'f'
-	| 'g'
-	| 'h'
-	| 'i'
-	| 'j'
-	| 'k'
-	| 'l'
-	| 'm'
-	| 'n'
-	| 'o'
-	| 'p'
-	| 'q'
-	| 'r'
-	| 's'
-	| 't'
-	| 'u'
-	| 'v'
-	| 'w'
-	| 'x'
-	| 'y'
-	| 'z';
-type Color = 'G' | 'Y' | 'B'; // green/yellow/black
+const guesses: [[Letter, Letter, Letter, Letter, Letter], [Color, Color, Color, Color, Color]][] = [];
+
+for (let i = 2; i < process.argv.length; i = i + 2) {
+	const guess = process.argv[i];
+	const hints = process.argv[i + 1];
+
+	//  todo: better catching of invalid inputs
+	if (hints == undefined || guess.length !== 5 || hints.length !== 5) throw new Error('Invalid input!');
+
+	guesses.push([
+		guess.toLowerCase().split('') as [Letter, Letter, Letter, Letter, Letter],
+		hints.toUpperCase().split('') as [Color, Color, Color, Color, Color],
+	]);
+}
 
 let possibilities = [...answers];
-
-const guesses: [[Letter, Letter, Letter, Letter, Letter], [Color, Color, Color, Color, Color]][] = [
-	// fill in here
-	[
-		['r', 'a', 'i', 's', 'e'],
-		['G', 'B', 'Y', 'B', 'B'],
-	],
-	[
-		['c', 'l', 'o', 'u', 't'],
-		['B', 'B', 'Y', 'B', 'B'],
-	],
-]; // e.g. RAISE, GBYBB
 
 for (const g of guesses) {
 	const [guess, hints] = g;
 
-	let correct: Letter[] = []; // order doesn't matter, this is just to handle duplicates
+	// order doesn't matter, this is just to handle duplicates
+	// should probably use a map but eh
+	let correct: Letter[] = [];
 
 	// first handle green vs not green
 	for (let i = 0; i < guess.length; i++) {
