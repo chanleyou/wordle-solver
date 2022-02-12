@@ -42,6 +42,8 @@ for (const g of guesses) {
 		const letter = guess[i];
 		const hint = hints[i];
 
+		if (hint === 'G') continue; // ignore, handled above
+
 		// handle duplicates
 		const corrects = correct.filter((l) => l === letter).length;
 
@@ -54,4 +56,4 @@ for (const g of guesses) {
 	}
 }
 
-console.log(possibilities);
+console.log(possibilities.join(', '));
