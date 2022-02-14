@@ -26,4 +26,8 @@ export type Letter =
 	| 'y'
 	| 'z';
 
+export type Guess = [Letter, Letter, Letter, Letter, Letter];
+
 export type Color = 'G' | 'Y' | 'B'; // green/yellow/black
+
+export type Hints = [Color, Color, Color, Color, Color];
